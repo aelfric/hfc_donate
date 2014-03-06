@@ -44,10 +44,9 @@ function hfc_donation_level_shortcode($attributes, $content = null){
 }
 
 function render_html_snippet($html_file, $vars) {
-	$template = wp_remote_retrieve_body( 
-		wp_remote_get( 
-			plugins_url() . '/hfc_donate/' .$html_file
-	));
+	$template = file_get_contents(
+			WP_PLUGIN_DIR.'/hfc_donate/' .$html_file
+	);
 	foreach($vars as $key => $value){
 		$template = str_replace("{{".$key."}}", $value, $template);
 	}
