@@ -23,7 +23,7 @@ input[type="radio"]:checked+label{
 }
 
 </style>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<form action="{{paypal_url}}" method="post">
 
 <!-- Identify your business so that you can collect the payments. -->
 <input type="hidden" name="business" value="{{donate_user_email}}">

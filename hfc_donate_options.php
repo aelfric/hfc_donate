@@ -16,6 +16,7 @@ function register_mysettings() {
 	//register our settings
 	register_setting( 'hfc-settings-group', 'donate_paypal_email' );
 	register_setting( 'hfc-settings-group', 'organization_name' );
+	register_setting( 'hfc-settings-group', 'paypal_url' );
 }
 
 function hfc_settings_page() {
@@ -34,6 +35,10 @@ function hfc_settings_page() {
         <tr valign="top">
         <th scope="row">Organization Name</th>
         <td><input type="text" name="organization_name" value="<?php echo get_option('organization_name'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+        <th scope="row">PayPal API URL</th>
+        <td><input type="text" name="paypal_url" value="<?php echo get_option('paypal_url'); ?>" /></td>
         </tr>
     </table>
     

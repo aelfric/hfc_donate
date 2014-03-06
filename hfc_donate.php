@@ -20,7 +20,8 @@ function hfc_donation_levels_form_shortcode( $attributes, $content = null ) {
 		array(
 			'levels' => do_shortcode(shortcode_unautop($content)),
 			'donate_user_email' => get_option('donate_paypal_email'),
-			'organization_name' => get_option('organization_name')
+			'organization_name' => get_option('organization_name'),
+			'paypal_url' => get_option('paypal_url'),
 		)
 	);
 }
