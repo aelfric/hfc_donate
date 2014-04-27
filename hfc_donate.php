@@ -10,6 +10,7 @@ License: MIT
 */
 
 include 'hfc_donate_options.php';
+include 'hfc_donate_callback.php';
 
 add_shortcode('hfc_donation_levels', 'hfc_donation_levels_form_shortcode');
 add_shortcode('level', 'hfc_donation_level_shortcode');
@@ -52,4 +53,26 @@ function render_html_snippet($html_file, $vars) {
 		$template = str_replace("{{".$key."}}", $value, $template);
 	}
 	return $template;
+}
+
+
+global $hfc_donate_db_version;
+register_activation_hook(__FILE__, 'hfc_donate_install');
+
+function hfc_donate_install(){
+    $table_name = "wp_payment_notifications";
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        name tinytext NOT NULL,
+        text text NOT NULL,
+        url VARCHAR(55) DEFAULT '' NOT NULL,
+        UNIQUE KEY id (id)
+    );";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    add_option( "hfc_donate_db_version", $hfc_donate_db_version );
 }
