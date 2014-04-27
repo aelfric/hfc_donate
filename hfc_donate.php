@@ -81,8 +81,8 @@ function hfc_donate_install(){
     echo $args['before_widget']; 
     echo $args['before_title'] . 'My Unique Widget' . $args['after_title'];
     echo render_html_snippet('_hfc_donate_widget.html', 
-      array('goal' => '5000',
-            'progress' => '1250'));
+    array('goal' => get_option('goal'),
+    'progress' => hfc_get_donated_amount()));
     echo $args['after_widget'];
  }
 
@@ -94,6 +94,6 @@ function hfc_donate_install(){
 
  add_action('init', 'hfc_register_widgets');
 
- function hfc_plugin_directory(){
-    return H.'/hfc_donate/';
+ function hfc_get_donated_amount(){
+    return 1250;
  }
