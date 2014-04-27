@@ -75,4 +75,25 @@ function hfc_donate_install(){
     dbDelta( $sql );
 
     add_option( "hfc_donate_db_version", $hfc_donate_db_version );
-}
+ }
+
+ function hfc_donate_progress_widget($args) {
+    echo $args['before_widget']; 
+    echo $args['before_title'] . 'My Unique Widget' . $args['after_title'];
+    echo render_html_snippet('_hfc_donate_widget.html', 
+      array('goal' => '5000',
+            'progress' => '1250'));
+    echo $args['after_widget'];
+ }
+
+ function hfc_register_widgets(){
+    wp_enqueue_style('donation_widget', plugins_url("/thermometer.css", __FILE__));
+    wp_enqueue_script('donation_widget', plugins_url("thermometer.js",__FILE__), array('jquery'));
+    wp_register_sidebar_widget('donation_progress', 'Donations', 'hfc_donate_progress_widget');
+ }
+
+ add_action('init', 'hfc_register_widgets');
+
+ function hfc_plugin_directory(){
+    return H.'/hfc_donate/';
+ }
