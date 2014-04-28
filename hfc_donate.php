@@ -105,5 +105,7 @@ function hfc_donate_install(){
  add_action('init', 'hfc_register_widgets');
 
  function hfc_get_donated_amount(){
-    return 1250;
+    global $wpdb;
+    $result = $wpdb->get_row('SELECT SUM(PaymentAmount) as total FROM wp_payment_notifications');
+    return $result->total;
  }
