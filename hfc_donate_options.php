@@ -20,6 +20,28 @@ function register_mysettings() {
     register_setting( 'hfc-settings-group', 'goal' );
 }
 
+function load_donation_history(){
+   global $wpdb;
+   $results = 
+   $wpdb->get_results("SELECT TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus from wp_payment_notifications", ARRAY_A);
+   echo "<table border=1>";
+      foreach($results as $id=>$row){
+         if($id == 0){
+            echo "<tr>";
+            foreach($row as $key => $value){
+               echo "<td>".$key."</td>";
+            }
+               echo "</tr>";
+         }
+         echo "<tr>";
+            foreach($row as $key => $value){
+               echo "<td>".$value."</td>";
+            }
+            echo "</tr>";
+      }
+      echo "</table>";
+
+}
 function hfc_settings_page() {
 ?>
 <div class="wrap">
@@ -48,6 +70,7 @@ function hfc_settings_page() {
     </table>
     
     <?php submit_button(); ?>
+    <?php load_donation_history(); ?>
 
 </form>
 </div>

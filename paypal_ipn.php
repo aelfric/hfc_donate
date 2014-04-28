@@ -1,7 +1,29 @@
 <?php
    function do_process($ipn){
+      global $wpdb;
       echo "Loading data to the database";
-      }
+      echo $_POST['txn_id'];
+      echo $_POST['first_name'];
+      echo $_POST['last_name'];
+      echo $_POST['payer_email'];
+      echo $_POST['payment_gross'];
+      echo $_POST['address_street'];
+      echo $_POST['address_city'];
+      echo $_POST['address_state'];
+      echo $_POST['address_zip'];
+      echo $_POST['payment_status'];
+      $wpdb->query($wpdb->prepare("INSERT INTO wp_payment_notifications (TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus) VALUES (%s, %s, %s, %s, %f, %s, %s, %s, %s, %s)",
+      $_POST['txn_id'],
+      $_POST['first_name'],
+      $_POST['last_name'],
+      $_POST['payer_email'],
+      $_POST['payment_gross'],
+      $_POST['address_street'],
+      $_POST['address_city'],
+      $_POST['address_state'],
+      $_POST['address_zip'],
+      $_POST['payment_status']));
+   }
 
 // Read POST data
 // reading posted data directly from $_POST causes serialization
@@ -94,7 +116,7 @@ if (strcmp ($res, "VERIFIED") == 0) {
    }
 
    // check that txn_id has not been previously processed
-   if($_POST['receiver_email'] != get_option(paypal_email)){
+   if($_POST['receiver_email'] != get_option('paypal_email')){
       // check that receiver_email is your PayPal email
       error_log('receiver email does not match');
    }

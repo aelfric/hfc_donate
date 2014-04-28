@@ -64,12 +64,21 @@ function hfc_donate_install(){
     $table_name = "wp_payment_notifications";
 
     $sql = "CREATE TABLE $table_name (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-        name tinytext NOT NULL,
-        text text NOT NULL,
-        url VARCHAR(55) DEFAULT '' NOT NULL,
-        UNIQUE KEY id (id)
+        id INT Not Null Auto_Increment,
+        Primary key(id),
+        PaymentStatus VARCHAR(20),
+        PaymentAmount Decimal(6,2),
+        PayerEmail VARCHAR(50),
+        FirstName VARCHAR(50),
+        LastName VARCHAR(50),
+        AddressStreet VARCHAR(50),
+        ReceiverEmail VARCHAR(50),
+        AddressStreet VARCHAR(50),
+        AddressCity VARCHAR(50),
+        AddressState VARCHAR(50),
+        AddressZip VARCHAR(50),
+        TransactionID VARCHAR(30),
+        Cur_TimeStamp TIMESTAMP(8)
     );";
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
