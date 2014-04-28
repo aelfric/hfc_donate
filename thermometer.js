@@ -1,18 +1,18 @@
 //originally from [url]http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript[/url]
 function formatCurrency(n, c, d, t) {
-   "use strict";
+    "use strict";
 
-   var s, i, j;
+    var s, i, j;
 
-   c = isNaN(c = Math.abs(c)) ? 2 : c;
-   d = d === undefined ? "." : d;
-   t = t === undefined ? "," : t;
+    c = isNaN(c = Math.abs(c)) ? 2 : c;
+    d = d === undefined ? "." : d;
+    t = t === undefined ? "," : t;
 
-   s = n < 0 ? "-" : "";
-   i = parseInt(n = Math.abs(+n || 0).toFixed(c), 10) + "";
-   j = (j = i.length) > 3 ? j % 3 : 0;
+    s = n < 0 ? "-" : "";
+    i = parseInt(n = Math.abs(+n || 0).toFixed(c), 10) + "";
+    j = (j = i.length) > 3 ? j % 3 : 0;
 
-   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 }
 
 /**
@@ -27,51 +27,51 @@ function formatCurrency(n, c, d, t) {
  *
  */
 function thermometer(goalAmount, progressAmount, animate) {
-   "use strict";
+    "use strict";
 
-   //set up our vars and cache some jQuery objects    
-   var $thermo = jQuery("#thermometer"),
-       $progress = jQuery(".progress", $thermo),
-       $goal = jQuery(".goal", $thermo),
-       percentageAmount;
+    //set up our vars and cache some jQuery objects    
+    var $thermo = jQuery("#thermometer"),
+        $progress = jQuery(".progress", $thermo),
+        $goal = jQuery(".goal", $thermo),
+        percentageAmount;
 
-   //work out our numbers        
-   goalAmount = goalAmount || parseFloat( $goal.text() ),
-              progressAmount = progressAmount || parseFloat( $progress.text() ),
-              percentageAmount =  Math.min( Math.round(progressAmount / goalAmount * 1000) / 10, 100); //make sure we have 1 decimal point
+    //work out our numbers        
+    goalAmount = goalAmount || parseFloat( $goal.text() ),
+               progressAmount = progressAmount || parseFloat( $progress.text() ),
+               percentageAmount =  Math.min( Math.round(progressAmount / goalAmount * 1000) / 10, 100); //make sure we have 1 decimal point
 
-   //let's format the numbers and put them back in the DOM
-   $goal.find(".amount").text( "$" + formatCurrency( goalAmount ) );
-   $progress.find(".amount").text( "$" + formatCurrency( progressAmount ) );
+    //let's format the numbers and put them back in the DOM
+    $goal.find(".amount").text( "$" + formatCurrency( goalAmount ) );
+    $progress.find(".amount").text( "$" + formatCurrency( progressAmount ) );
 
-   //let's set the progress indicator
+    //let's set the progress indicator
 
-   $progress.find(".amount").hide();
+    $progress.find(".amount").hide();
 
-   if (animate !== false) {
-      $progress.animate({
+    if (animate !== false) {
+        $progress.animate({
             "height": percentageAmount + "%"
-            }, 1200, function(){
+        }, 1200, function(){
             jQuery(this).find(".amount").fadeIn(500);
-            });
-   }
-   else { // we don't always want to animate
-      $progress.css({
+        });
+    }
+    else { // we don't always want to animate
+        $progress.css({
             "height": percentageAmount + "%"
-            });
-      $progress.find(".amount").fadeIn(500);
-   }
+        });
+        $progress.find(".amount").fadeIn(500);
+    }
 }
 
 
 jQuery(document).ready(function(){
 
-      //call without the parameters to have it read from the DOM
-      thermometer();
+    //call without the parameters to have it read from the DOM
+    thermometer();
 
-      // or with parameters if you want to update it using JavaScript.
-      // you can update it live, and choose whether to show the animation
-      // (which you might not if the updates are relatively small)
-      //thermometer( 1000000, 425610, false );
+    // or with parameters if you want to update it using JavaScript.
+    // you can update it live, and choose whether to show the animation
+    // (which you might not if the updates are relatively small)
+    //thermometer( 1000000, 425610, false );
 
-      });
+});
