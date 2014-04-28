@@ -22,26 +22,16 @@ function register_mysettings() {
 
 function load_donation_history(){
    global $wpdb;
-   $results = 
-   $wpdb->get_results("SELECT TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus from wp_payment_notifications", ARRAY_A);
-   echo "<table border=1>";
-      foreach($results as $id=>$row){
-         if($id == 0){
-            echo "<tr>";
-            foreach($row as $key => $value){
-               echo "<td>".$key."</td>";
-            }
-               echo "</tr>";
-         }
-         echo "<tr>";
-            foreach($row as $key => $value){
-               echo "<td>".$value."</td>";
-            }
-            echo "</tr>";
-      }
-      echo "</table>";
-
+   $results = $wpdb->get_results("SELECT TransactionID, FirstName, LastName, PayerEmail,
+   PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip,
+   PaymentStatus from wp_payment_notifications", ARRAY_A);
+   $content = '';
+   foreach($results as $id=>$row){
+      $content = $content . render_html_snippet("_hfc_donation_report_row.html", $row);
+   }
+   echo render_html_snippet("_hfc_donation_report_table.html", array('rows' => $content));
 }
+
 function hfc_settings_page() {
 ?>
 <div class="wrap">
