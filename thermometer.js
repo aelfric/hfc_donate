@@ -4,13 +4,16 @@ function formatCurrency(n, c, d, t) {
 
     var s, i, j;
 
-    c = isNaN(c = Math.abs(c)) ? 2 : c;
+    c = Math.abs(c);
+    c = isNaN(c) ? 2 : c;
     d = d === undefined ? "." : d;
     t = t === undefined ? "," : t;
 
     s = n < 0 ? "-" : "";
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c), 10) + "";
-    j = (j = i.length) > 3 ? j % 3 : 0;
+    n = Math.abs(+n || 0).toFixed(c);
+    i = parseInt(n, 10).toString();
+    j = i.length;
+    j = (j > 3) ? j % 3 : 0;
 
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 }
@@ -36,13 +39,14 @@ function thermometer(goalAmount, progressAmount, animate) {
         percentageAmount;
 
     //work out our numbers        
-    goalAmount = goalAmount || parseFloat( $goal.text() ),
-               progressAmount = progressAmount || parseFloat( $progress.text() ),
-               percentageAmount =  Math.min( Math.round(progressAmount / goalAmount * 1000) / 10, 100); //make sure we have 1 decimal point
+    goalAmount = goalAmount || parseFloat($goal.text());
+    progressAmount = progressAmount || parseFloat($progress.text());
+    percentageAmount = Math.min((progressAmount / goalAmount * 100).toFixed(1), 100);
+    //make sure we have 1 decimal point
 
     //let's format the numbers and put them back in the DOM
-    $goal.find(".amount").text( "$" + formatCurrency( goalAmount ) );
-    $progress.find(".amount").text( "$" + formatCurrency( progressAmount ) );
+    $goal.find(".amount").text("$" + formatCurrency(goalAmount));
+    $progress.find(".amount").text("$" + formatCurrency(progressAmount));
 
     //let's set the progress indicator
 
@@ -51,11 +55,10 @@ function thermometer(goalAmount, progressAmount, animate) {
     if (animate !== false) {
         $progress.animate({
             "height": percentageAmount + "%"
-        }, 1200, function(){
+        }, 1200, function () {
             jQuery(this).find(".amount").fadeIn(500);
         });
-    }
-    else { // we don't always want to animate
+    } else { // we don't always want to animate
         $progress.css({
             "height": percentageAmount + "%"
         });
@@ -64,7 +67,8 @@ function thermometer(goalAmount, progressAmount, animate) {
 }
 
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function () {
+    "use strict";
 
     //call without the parameters to have it read from the DOM
     thermometer();
