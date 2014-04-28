@@ -1,21 +1,25 @@
 //originally from [url]http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript[/url]
-function formatCurrency(n, c, d, t) {
+function formatCurrency(amount, decimal_sep, thousands_sep) {
     "use strict";
 
-    var s, i, j;
+    var sign,
+        amount_string,
+        num_digits,
+        precision = 2;
 
-    c = Math.abs(c);
-    c = isNaN(c) ? 2 : c;
-    d = d === undefined ? "." : d;
-    t = t === undefined ? "," : t;
+    decimal_sep = decimal_sep === undefined ? "." : decimal_sep;
+    thousands_sep = thousands_sep === undefined ? "," : thousands_sep;
 
-    s = n < 0 ? "-" : "";
-    n = Math.abs(+n || 0).toFixed(c);
-    i = parseInt(n, 10).toString();
-    j = i.length;
-    j = (j > 3) ? j % 3 : 0;
+    sign = amount < 0 ? "-" : "";
+    amount = Math.abs(+amount || 0).toFixed(precision);
+    amount_string = parseInt(amount, 10).toString();
+    num_digits = amount_string.length;
+    num_digits = (num_digits > 3) ? num_digits % 3 : 0;
 
-    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    return (sign +
+            (num_digits ? amount_string.substr(0, num_digits) + thousands_sep : "") +
+            amount_string.substr(num_digits).replace(/(\d{3})(?=\d)/g, "$1" + thousands_sep) +
+            (decimal_sep + Math.abs(amount - amount_string).toFixed(precision).slice(2)));
 }
 
 /**
