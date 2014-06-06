@@ -78,7 +78,8 @@ function hfc_donate_install(){
         AddressState VARCHAR(50),
         AddressZip VARCHAR(50),
         TransactionID VARCHAR(30),
-        Cur_TimeStamp TIMESTAMP(8)
+        Cur_TimeStamp TIMESTAMP(8),
+        Custom VARCHAR(200)
     );";
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -100,6 +101,7 @@ function hfc_donate_install(){
  function hfc_register_widgets(){
     wp_enqueue_style('donation_widget', plugins_url("/thermometer.css", __FILE__));
     wp_enqueue_script('donation_widget', plugins_url("thermometer.js",__FILE__), array('jquery'));
+    wp_enqueue_script('donation_form', plugins_url("donate_form.js",__FILE__), array('jquery'));
     wp_register_sidebar_widget('donation_progress', 'Donations', 'hfc_donate_progress_widget');
  }
 

@@ -23,7 +23,7 @@ input[type="radio"]:checked+label{
 }
 
 </style>
-<form action="{{paypal_url}}" method="post">
+<form action="{{paypal_url}}" method="post" id='donate_form'>
 
 <!-- Identify your business so that you can collect the payments. -->
 <input type="hidden" name="business" value="{{donate_user_email}}">
@@ -39,7 +39,16 @@ input[type="radio"]:checked+label{
 {{levels}}
 <br/>
 <input type="hidden" name="currency_code" value="USD">
+<div>
 
+<select id='donation_type'>
+   <option></option>
+   <option value='cast'>In support of a cast member</option>
+   <option value='memory'>In memory of</option>
+   <option value='honor'>In honor of</option>
+</select>
+<input type='text' name='custom' id='custom'/>
+</div>
 
 <!-- Display the payment button. -->
 <input type="image" name="submit" border="0"

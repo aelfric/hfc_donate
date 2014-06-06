@@ -25,7 +25,7 @@ function load_donation_history(){
    global $wpdb;
    $results = $wpdb->get_results("SELECT TransactionID, FirstName, LastName, PayerEmail,
    PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip,
-   PaymentStatus from wp_payment_notifications", ARRAY_A);
+   PaymentStatus, Custom from wp_payment_notifications", ARRAY_A);
    $content = '';
    foreach($results as $id=>$row){
       $content = $content . render_html_snippet("_hfc_donation_report_row.html", $row);
