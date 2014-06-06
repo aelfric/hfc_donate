@@ -18,6 +18,7 @@ function register_mysettings() {
 	register_setting( 'hfc-settings-group', 'organization_name' );
 	register_setting( 'hfc-settings-group', 'paypal_url' );
     register_setting( 'hfc-settings-group', 'goal' );
+    register_setting( 'hfc-settings-group', 'donate_page_id' );
 }
 
 function load_donation_history(){
@@ -56,6 +57,10 @@ function hfc_settings_page() {
         <tr valign="top">
         <th scope="row">Fundraising Goal</th>
         <td><input type="text" name="goal" value="<?php echo get_option('goal'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+           <th scope="row">Donation Page</th>
+           <td><?php wp_dropdown_pages(array('name' => 'donate_page_id','selected'=>get_option('donate_page_id'))); ?></td>
         </tr>
     </table>
     
