@@ -13,7 +13,7 @@
       echo $_POST['address_zip'];
       echo $_POST['payment_status'];
       echo $_POST['custom'];
-      $wpdb->query($wpdb->prepare("INSERT INTO wp_payment_notifications (TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus) VALUES (%s, %s, %s, %s, %f, %s, %s, %s, %s, %s)",
+      $wpdb->query($wpdb->prepare("INSERT INTO wp_payment_notifications (TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus, Custom) VALUES (%s, %s, %s, %s, %f, %s, %s, %s, %s, %s, %s)",
       $_POST['txn_id'],
       $_POST['first_name'],
       $_POST['last_name'],
@@ -23,7 +23,7 @@
       $_POST['address_city'],
       $_POST['address_state'],
       $_POST['address_zip'],
-      $_POST['payment_status']
+      $_POST['payment_status'],
       $_POST['custom']));
    }
 
