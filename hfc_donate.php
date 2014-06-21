@@ -63,7 +63,7 @@ register_activation_hook(__FILE__, 'hfc_donate_install');
 function hfc_donate_install(){
     $table_name = "wp_payment_notifications";
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE ".$table_name." (
         id INT Not Null Auto_Increment,
         Primary key(id),
         PaymentStatus VARCHAR(20),
