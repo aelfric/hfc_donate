@@ -65,7 +65,7 @@ function hfc_donate_install(){
 
     $sql = "CREATE TABLE ".$table_name." (
         id INT Not Null Auto_Increment,
-        Primary key(id),
+        PRIMARY KEY  (id),
         PaymentStatus VARCHAR(20),
         PaymentAmount Decimal(6,2),
         PayerEmail VARCHAR(50),
@@ -78,7 +78,7 @@ function hfc_donate_install(){
         AddressState VARCHAR(50),
         AddressZip VARCHAR(50),
         TransactionID VARCHAR(30),
-        Cur_TimeStamp TIMESTAMP(8),
+        Cur_TimeStamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         Custom VARCHAR(200)
     );";
 
