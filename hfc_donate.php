@@ -91,9 +91,10 @@ function hfc_donate_install(){
     echo $args['before_widget']; 
     echo $args['before_title'] . 'Donation Goal' . $args['after_title'];
     echo render_html_snippet('_hfc_donate_widget.html', 
-    array('goal' => get_option('goal'),
-    'progress' => hfc_get_donated_amount(),
-    'donate_page' => get_page_link(get_option('donate_page_id'))));
+    array( 'widget_text' => get_option('widget_text'),
+       'goal' => get_option('goal'),
+       'progress' => hfc_get_donated_amount(),
+       'donate_page' => get_page_link(get_option('donate_page_id'))));
     echo $args['after_widget'];
  }
 

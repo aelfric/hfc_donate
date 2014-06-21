@@ -19,6 +19,7 @@ function register_mysettings() {
 	register_setting( 'hfc-settings-group', 'paypal_url' );
     register_setting( 'hfc-settings-group', 'goal' );
     register_setting( 'hfc-settings-group', 'donate_page_id' );
+    register_setting( 'hfc-settings-group', 'widget_text' );
 }
 
 function load_donation_history(){
@@ -57,6 +58,10 @@ function hfc_settings_page() {
         <tr valign="top">
         <th scope="row">Fundraising Goal</th>
         <td><input type="text" name="goal" value="<?php echo get_option('goal'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+           <th scope="row">Sidebar Text</th>
+           <td><input type="text" name="widget_text" value="<?php echo get_option('widget_text'); ?>" /></td>
         </tr>
         <tr valign="top">
            <th scope="row">Donation Page</th>
