@@ -71,7 +71,6 @@ function hfc_donate_install(){
         PayerEmail VARCHAR(50),
         FirstName VARCHAR(50),
         LastName VARCHAR(50),
-        AddressStreet VARCHAR(50),
         ReceiverEmail VARCHAR(50),
         AddressStreet VARCHAR(50),
         AddressCity VARCHAR(50),
