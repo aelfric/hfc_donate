@@ -99,10 +99,10 @@ function hfc_donate_install(){
  }
 
  add_action( 'wp_ajax_update_widget_progress', 'update_widget_progress' );
- add_action( 'wp_ajax_nonpriv_update_widget_progress', 'update_widget_progress' );
+ add_action( 'wp_ajax_nopriv_update_widget_progress', 'update_widget_progress' );
 
  function update_widget_progress() {
-    die('400.00');
+    die(hfc_get_donated_amount());
  }
 
  function hfc_register_widgets(){
