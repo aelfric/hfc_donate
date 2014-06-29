@@ -72,14 +72,23 @@ function thermometer(goalAmount, progressAmount, animate) {
 
 
 jQuery(document).ready(function () {
-    "use strict";
+   "use strict";
 
-    //call without the parameters to have it read from the DOM
-    thermometer();
+   jQuery.get(
+      '/wp-admin/admin-ajax.php',
+      {
+         'action': 'update_widget_progress',
+      }, 
+      function(response){
+         jQuery('.progress .amount').text(response);
+         thermometer();
+      }
+      );
+   //call without the parameters to have it read from the DOM
 
-    // or with parameters if you want to update it using JavaScript.
-    // you can update it live, and choose whether to show the animation
-    // (which you might not if the updates are relatively small)
-    //thermometer( 1000000, 425610, false );
+   // or with parameters if you want to update it using JavaScript.
+   // you can update it live, and choose whether to show the animation
+   // (which you might not if the updates are relatively small)
+   //thermometer( 1000000, 425610, false );
 
 });

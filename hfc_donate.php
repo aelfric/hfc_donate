@@ -98,6 +98,13 @@ function hfc_donate_install(){
     echo $args['after_widget'];
  }
 
+ add_action( 'wp_ajax_update_widget_progress', 'update_widget_progress' );
+ add_action( 'wp_ajax_nonpriv_update_widget_progress', 'update_widget_progress' );
+
+ function update_widget_progress() {
+    die('400.00');
+ }
+
  function hfc_register_widgets(){
     wp_enqueue_style('donation_widget', plugins_url("/thermometer.css", __FILE__));
     wp_enqueue_script('donation_widget', plugins_url("thermometer.js",__FILE__), array('jquery'));
