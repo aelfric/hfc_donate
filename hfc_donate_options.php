@@ -26,10 +26,14 @@ function load_donation_history(){
    global $wpdb;
    $results = $wpdb->get_results("SELECT TransactionID, FirstName, LastName, PayerEmail,
    PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip,
-   PaymentStatus, Custom, Cur_Timestamp from wp_payment_notifications", ARRAY_A);
+   PaymentStatus, Custom, Cur_Timestamp, Memo from wp_payment_notifications", ARRAY_A);
    $content = '';
    foreach($results as $id=>$row){
-      $content = $content . render_html_snippet("_hfc_donation_report_row.html", $row);
+      if (empty($row['Memo'])){ 
+          $content = $content . render_html_snippet("_hfc_donation_report_row.html", $row);
+      } else {
+          $content = $content . render_html_snippet("_hfc_donation_report_row_with_comment.html", $row);
+      }
    }
    echo render_html_snippet("_hfc_donation_report_table.html", array('rows' => $content));
 }
