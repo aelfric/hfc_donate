@@ -77,6 +77,7 @@ function hfc_donate_install(){
         AddressState VARCHAR(50),
         AddressZip VARCHAR(50),
         TransactionID VARCHAR(30),
+        Memo VARCHAR(255),
         Cur_TimeStamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         Custom VARCHAR(200)
     );";
