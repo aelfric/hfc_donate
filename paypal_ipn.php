@@ -1,18 +1,18 @@
 <?php
    function do_process($ipn){
       global $wpdb;
-      echo "Loading data to the database";
-      echo $_POST['txn_id'];
-      echo $_POST['first_name'];
-      echo $_POST['last_name'];
-      echo $_POST['payer_email'];
-      echo $_POST['payment_gross'];
-      echo $_POST['address_street'];
-      echo $_POST['address_city'];
-      echo $_POST['address_state'];
-      echo $_POST['address_zip'];
-      echo $_POST['payment_status'];
-      echo $_POST['custom'];
+//      echo "Loading data to the database";
+//      echo $_POST['txn_id'];
+//      echo $_POST['first_name'];
+//      echo $_POST['last_name'];
+//      echo $_POST['payer_email'];
+//      echo $_POST['payment_gross'];
+//      echo $_POST['address_street'];
+//      echo $_POST['address_city'];
+//      echo $_POST['address_state'];
+//      echo $_POST['address_zip'];
+//      echo $_POST['payment_status'];
+//      echo $_POST['custom'];
       $wpdb->query($wpdb->prepare("INSERT INTO wp_payment_notifications (TransactionID, FirstName, LastName, PayerEmail, PaymentAmount, AddressStreet, AddressCity, AddressState, AddressZip, PaymentStatus, Custom, Memo) VALUES (%s, %s, %s, %s, %f, %s, %s, %s, %s, %s, %s, %s)",
       $_POST['txn_id'],
       $_POST['first_name'],
@@ -27,6 +27,18 @@
       $_POST['custom'],
       $_POST['memo']));
    }
+/**
+ * Returns false if a transaction id has already been processed
+ */
+function check_txn_id($txn_id){
+     echo "Checking id....";
+      global $wpdb;
+      $wpdb->query(
+         $wpdb->prepare("SELECT 1 from wp_payment_notifications WHERE TransactionID = %s",
+         $txn_id));
+      echo "\n".$wpdb->num_rows."\n";
+      return ($wpdb->num_rows == 0);
+}
 
 // Read POST data
 // reading posted data directly from $_POST causes serialization
@@ -113,12 +125,18 @@ if (curl_errno($ch) != 0) // cURL error
 // Inspect IPN validation result and act accordingly
 
 if (strcmp ($res, "VERIFIED") == 0) {
+   echo "message verified";
    if($_POST['payment_status'] != 'Completed'){
       // check whether the payment_status is Completed
       error_log('payment not yet completed');
    }
 
    // check that txn_id has not been previously processed
+   if (!check_txn_id($_POST['txn_id'])){
+	   error_log('transaction already processed');
+	   echo 'transaction already processed';
+           die();
+   }
    if($_POST['receiver_email'] != get_option('paypal_email')){
       // check that receiver_email is your PayPal email
       error_log('receiver email does not match');
@@ -140,7 +158,6 @@ if (strcmp ($res, "VERIFIED") == 0) {
       error_log(date('[Y-m-d H:i e] '). "Verified IPN: $req ". PHP_EOL);
    }
 } else if (strcmp ($res, "INVALID") == 0) {
-   do_process($_POST);
    // log for manual investigation
 	// Add business logic here which deals with invalid IPN messages
 	if(WP_DEBUG == true) {
